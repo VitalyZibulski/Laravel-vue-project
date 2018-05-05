@@ -1,8 +1,8 @@
 <template>
         <tr>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.priority }}</td>
+            <td><button class="btn btn-danger">Remove</button></td>
         </tr>
 </template>
 
@@ -13,7 +13,9 @@
             return{
 
             }
-        }
+        },
+
+        props:['task']
     }
 
 
