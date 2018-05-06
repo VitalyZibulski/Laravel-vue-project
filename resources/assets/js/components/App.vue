@@ -50,18 +50,22 @@
                 });
             },
             store(){
-
-                window.axios.post('/api/tasks', this.task).then(savedTask=>{
-                    this.tasks.push(savedTask.data);
-                });
-
+                if(this.checkInputs()) {
+                    window.axios.post('/api/tasks', this.task).then(savedTask => {
+                        this.tasks.push(savedTask.data);
+                        this.task.title = '';
+                    });
+                }
+            },
+            checkInputs(){
+                if(this.task.title && this.task.priority) return true;
             },
             remove(id){
                 window.axios.delete(`/api/tasks/${id}`).then(()=>{
                     let index = this.tasks.findIndex(task => task.id === id);
                     this.tasks.splice(index, 1);
-                )};
-
+                });
+            }
         },
 
         created(){
