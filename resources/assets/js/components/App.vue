@@ -10,7 +10,7 @@
             </tr>
             </thead>
             <tbody>
-            <task-component v-for="task in tasks" :key="task.id" :task="task"></task-component>
+            <task-component v-for="task in tasks" :key="task.id" :task="task" @delete="remove"></task-component>
             <tr>
                 <td><input v-model="task.title" type="text" id="task" class="form-control"></td>
                 <td>
@@ -54,8 +54,13 @@
                 window.axios.post('/api/tasks', this.task).then(savedTask=>{
                     this.tasks.push(savedTask.data);
                 });
-                console.log(this.task.title)
-            }
+
+            },
+            remove(id){
+                window.axios.delete(`/api/tasks/${id}`).then(()=>{
+                    let index = this.tasks.findIndex(task => task.id === id);
+                    this.tasks.splice(index, 1);
+                )};
 
         },
 
