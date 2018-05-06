@@ -1,5 +1,6 @@
 <template>
     <div id="app-component">
+        <loading :active.sync="isLoading"></loading>
         <table class="table">
             <thead>
             <tr>
@@ -32,9 +33,14 @@
 
     import TaskComponent from './Task.vue'
 
+    import Loading from 'vue-loading-overlay';
+
+    import 'vue-loading-overlay/dist/vue-loading.min.css';
+
     export default{
         data(){
             return{
+                isLoading: false,//
                 tasks:[],
                 task:{title:'', priority:''},
 
@@ -50,10 +56,12 @@
                 });
             },
             store(){
+                this.isLoading = true;//
                 if(this.checkInputs()) {
                     window.axios.post('/api/tasks', this.task).then(savedTask => {
                         this.tasks.push(savedTask.data);
                         this.task.title = '';
+                        this.isLoading = false;//
                     });
                 }
             },
@@ -61,9 +69,11 @@
                 if(this.task.title && this.task.priority) return true;
             },
             remove(id){
+                this.isLoading = true;
                 window.axios.delete(`/api/tasks/${id}`).then(()=>{
                     let index = this.tasks.findIndex(task => task.id === id);
                     this.tasks.splice(index, 1);
+                    this.isLoading = false;
                 });
             }
         },
@@ -71,7 +81,7 @@
         created(){
             this.getTasks();
         },
-        components:{TaskComponent}
+        components:{TaskComponent, Loading}
     }
 
 
