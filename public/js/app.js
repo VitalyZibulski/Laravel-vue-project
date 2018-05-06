@@ -47615,7 +47615,7 @@ exports = module.exports = __webpack_require__(11)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47691,6 +47691,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -47698,10 +47699,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            tasks: [{ id: 1, title: 'Task 1 ', priority: 'low' }, { id: 2, title: 'Task 2 ', priority: 'high' }, { id: 3, title: 'Task 3 ', priority: 'low' }],
+            tasks: [],
 
             message: 'MESSAGE'
         };
+    },
+
+    methods: {
+        getTasks: function getTasks() {
+            var _this = this;
+
+            window.axios.get('/api/tasks').then(function (_ref) {
+                var data = _ref.data;
+
+
+                data.forEach(function (task) {
+                    _this.tasks.push(task);
+                });
+            });
+        }
+    },
+
+    created: function created() {
+        this.getTasks();
     },
 
     components: { TaskComponent: __WEBPACK_IMPORTED_MODULE_0__Task_vue___default.a }
@@ -47793,7 +47813,7 @@ exports = module.exports = __webpack_require__(11)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47804,6 +47824,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -47832,6 +47853,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
+    _c("td", [_vm._v(_vm._s(_vm.task.id))]),
+    _vm._v(" "),
     _c("td", [_vm._v(_vm._s(_vm.task.title))]),
     _vm._v(" "),
     _c("td", [_vm._v(_vm._s(_vm.task.priority))]),
@@ -47891,6 +47914,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
+        _c("th", [_vm._v("Id")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Task Ttitle")]),
         _vm._v(" "),
         _c("th", [_vm._v("Priority")]),
